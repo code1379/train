@@ -1,5 +1,7 @@
 package com.coder.train.member.controller;
 
+import com.coder.train.common.resp.CommonResp;
+import com.coder.train.member.req.MemberRegisterReq;
 import com.coder.train.member.service.MemberService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +16,21 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("/count")
-    public Integer count(){
-        return memberService.count();
+    public CommonResp<Integer> count(){
+        // Ctrl + Alt + V
+        int count = memberService.count();
+        CommonResp<Integer> resp = new CommonResp<>();
+        resp.setContent(count);
+        return resp;
     }
 
     @PostMapping("/register")
-    public long register(String mobile){
-        return memberService.register(mobile);
+    public CommonResp<Long> register(MemberRegisterReq req){
+        long id = memberService.register(req);
+        // CommonResp<Long> resp = new CommonResp<>();
+        // resp.setContent(id);
+        // return resp;
+        // 因为多了一个构造函数，所以可以直接使用下面的语句
+        return new CommonResp<>(id);
     }
 }
