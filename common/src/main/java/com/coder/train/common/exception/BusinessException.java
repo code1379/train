@@ -1,6 +1,6 @@
 package com.coder.train.common.exception;
 
-public class BusinessException extends RuntimeException{
+public class BusinessException extends RuntimeException {
     public BusinessException(BusinessExceptionEnum e) {
         this.e = e;
     }
@@ -13,5 +13,13 @@ public class BusinessException extends RuntimeException{
 
     public void setE(BusinessExceptionEnum e) {
         this.e = e;
+    }
+
+    /**
+     * 不写入堆栈信息，提高性能
+     */
+    @Override
+    public Throwable fillInStackTrace() {
+        return this;
     }
 }
