@@ -1,6 +1,8 @@
 package com.coder.train.member.service;
 
 import cn.hutool.core.collection.CollUtil;
+import com.coder.train.common.exception.BusinessException;
+import com.coder.train.common.exception.BusinessExceptionEnum;
 import com.coder.train.member.domain.Member;
 import com.coder.train.member.domain.MemberExample;
 import com.coder.train.member.mapper.MemberMapper;
@@ -29,7 +31,7 @@ public class MemberService {
         // 数据中已经存在该手机号，直接返回 id。或者抛出一个用户已经注册了的异常
         if(CollUtil.isNotEmpty(list)){
             // return list.get(0).getId();
-            throw new RuntimeException("手机号已经注册了");
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_EXIST);
         }
 
         Member member = new Member();
