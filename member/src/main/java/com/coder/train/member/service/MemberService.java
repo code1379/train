@@ -3,6 +3,7 @@ package com.coder.train.member.service;
 import cn.hutool.core.collection.CollUtil;
 import com.coder.train.common.exception.BusinessException;
 import com.coder.train.common.exception.BusinessExceptionEnum;
+import com.coder.train.common.util.SnowUtil;
 import com.coder.train.member.domain.Member;
 import com.coder.train.member.domain.MemberExample;
 import com.coder.train.member.mapper.MemberMapper;
@@ -35,7 +36,9 @@ public class MemberService {
         }
 
         Member member = new Member();
-        member.setId(System.currentTimeMillis());
+        // 自增id不适合分布式的数据库。
+        // uuid 会影响索引效率，因为uuid 是无需的，用一堆无序的id来构建一个有序的索引目录，性能上肯定有问题的
+        member.setId(SnowUtil.getSnowflakeNextId());
         member.setMobile(mobile);
         memberMapper.insert(member);
         return member.getId();
